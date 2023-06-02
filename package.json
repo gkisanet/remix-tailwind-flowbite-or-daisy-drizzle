@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "npm run build:css && remix build",
+    "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
+    "dev": "concurrently 'npm run dev:css' 'remix dev'",
+    "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
+    "postinstall": "remix setup node",
+    "routes:gen": "routes-gen -d @routes-gen/remix",
+    "db:migrations": "drizzle-kit generate:sqlite --out ./app/db/migrations --schema ./app/db/schema.server.ts",
+    "start": "remix-serve build",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@remix-run/css-bundle": "^1.16.1",
+    "@remix-run/node": "^1.16.1",
+    "@remix-run/react": "^1.16.1",
+    "@remix-run/serve": "^1.16.1",
+    "@routes-gen/remix": "^0.3.6",
+    "argon2": "^0.30.3",
+    "better-sqlite3": "^8.4.0",
+    "domain-functions": "^1.7.1",
+    "drizzle-orm": "^0.26.5",
+    "flowbite": "^1.6.5",
+    "isbot": "^3.6.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "routes-gen": "^0.6.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^1.16.1",
+    "@remix-run/eslint-config": "^1.16.1",
+    "@types/better-sqlite3": "^7.6.4",
+    "@types/react": "^18.0.35",
+    "@types/react-dom": "^18.0.11",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.1.0",
+    "daisyui": "^3.0.1",
+    "drizzle-kit": "^0.18.1",
+    "eslint": "^8.38.0",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
