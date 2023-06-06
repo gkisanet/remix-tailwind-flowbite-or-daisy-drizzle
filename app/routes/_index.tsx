@@ -1,42 +1,12 @@
-import type { V2_MetaFunction } from '@remix-run/node'
+// @/app/routes/_index.tsx
+import { type LoaderFunction } from '@remix-run/node'
+import { route } from 'routes-gen'
 
-export const meta: V2_MetaFunction = () => {
-  return [
-    { title: 'New Remix App' },
-    { name: 'description', content: 'Welcome to Remix!' },
-  ]
-}
+import { authenticator } from '~/auth/authenticator.server'
 
-export default function Index() {
-  return (
-    <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    // <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.8' }}>
-    //   <h1>Welcome to Remix</h1>
-    //   <ul>
-    //     <li>
-    //       <a
-    //         target="_blank"
-    //         href="https://remix.run/tutorials/blog"
-    //         rel="noreferrer"
-    //       >
-    //         15m Quickstart Blog Tutorial
-    //       </a>
-    //     </li>
-    //     <li>
-    //       <a
-    //         target="_blank"
-    //         href="https://remix.run/tutorials/jokes"
-    //         rel="noreferrer"
-    //       >
-    //         Deep Dive Jokes App Tutorial
-    //       </a>
-    //     </li>
-    //     <li>
-    //       <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-    //         Remix Docs
-    //       </a>
-    //     </li>
-    //   </ul>
-    // </div>
-  )
+export const loader: LoaderFunction = async ({ request }) => {
+  return await authenticator.isAuthenticated(request, {
+    successRedirect: route('/protected'),
+    failureRedirect: route('/auth/sign-up'),
+  })
 }
